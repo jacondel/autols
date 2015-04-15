@@ -1,0 +1,6 @@
+if [ -d $1 ]; then
+	builtin cd $1
+	echo $PWD>~/.curDir.txt
+else
+	echo "bash:autols cd: ""$1"": No such file or directory"
+fi

@@ -1,0 +1,8 @@
+Package: autols
+Version: 1.0
+Section: base
+Priority: optional
+Architecture: i386
+Depends:
+Maintainer: jake.condello@gmail.com
+Description: Monitor contents of folders in a separate terminal
