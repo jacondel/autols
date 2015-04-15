@@ -1,4 +1,2 @@
 builtin cd $1
-if [ -d $1 ]; then
-	echo $PWD>~/.curDir.txt
-fi
+echo $PWD>~/.curDir.txt
