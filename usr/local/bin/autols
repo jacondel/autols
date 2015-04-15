@@ -13,7 +13,6 @@ do
 		d=0
         fi
         if [ "$ip" == "-d" ] || [ "$ip" == "--delay" ] ; then
-		echo "found a d"
                 d=1
         fi
         if [ "$ip" == "-s" ] || [ "$ip" == "--start" ] ; then
