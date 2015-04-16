@@ -1,2 +1,7 @@
+#!/bin/bash
 builtin cd $1
-echo $PWD>~/.curDir.txt
+if [ -f "${HOME}/.curDir-${$}" ]; then
+	echo $PWD>~/.curDir-${$}
+else
+	echo $PWD>~/.curDir
+fi

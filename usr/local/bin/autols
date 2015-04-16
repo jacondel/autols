@@ -1,14 +1,27 @@
 #!/bin/bash
 refreshRate=.5
+p=0
 d=0
 s=0
+pid=0
 for ip in "$@"
 do
+        if [ $p -eq 1 ] ; then
+                if [[ $ip =~ ^[0-9]*$ ]] ; then
+                	pid=$ip
+		else
+			echo "non-integer pid"
+		fi
+		p=0
+        fi
+        if [ "$ip" == "-p" ] || [ "$ip" == "--pid" ] ; then
+                p=1
+        fi
         if [ $d -eq 1 ] ; then
                 if [[ $ip =~ ^[0-9]*$ ]] ; then
                 	refreshRate=$(echo "$ip / 1000" | bc -l)
 		else
-			echo "non-integer input"
+			echo "non-integer delay"
 		fi
 		d=0
         fi
@@ -19,8 +32,13 @@ do
                 s=1
         fi
         if [ "$ip" == "-e" ] || [ "$ip" == "--end" ] ; then
-                rm ~/.curDir.txt 2> /dev/null
-		echo "autols monitor ended"
+		if [ -f "${HOME}/.curDir-${PPID}" ]; then
+			rm "${HOME}/.curDir-${PPID}" 
+			echo "autols monitor for pid ${PPID} ended"
+		else
+			rm ~/.curDir 2> /dev/null
+			echo "autols monitor ended"
+		fi
 		exit 0
         fi
 done
@@ -32,12 +50,15 @@ fi
 if [ $s -eq 1 ] ; then
 
 clear
-echo "$HOME" > ~/.curDir.txt
-file="$HOME""/.curDir.txt"
+file="${HOME}/.curDir"
+if [ "$pid" != 0 ] ; then
+	file="${HOME}/.curDir-${pid}"
+fi
+echo "$HOME">$file
+
 
 while [ -f "$file" ]
 do
-	#echo "running"
 	if [ "$contents" != "$(cat $file)" ]; then
 		clear
 		echo "$(cat $file)" 
@@ -45,9 +66,6 @@ do
 		ls --color=auto "$(cat $file)"
 	fi
 	contents="$(cat $file)"
-	#echo "$file"
-	#echo "contents: ""$contents"
 	sleep $refreshRate 
 done
-
 fi
