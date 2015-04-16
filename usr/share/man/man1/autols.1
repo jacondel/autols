@@ -6,21 +6,24 @@ autols \- automatically generate output of ls command in a designated terminal f
 cd= '. autocd'
 .TP 
 .B autols
-[\-s] [\-d delay in ms]
+[\-s] [\-d delay in ms] [-p pid]
 .TP 
 .B autols
 [\-e]
 .SH DESCRIPTION
-Autols eliminates the need to execute the ls command after every directory change. It displays the path and contents of the current working directory of the terminal which most recently executed the cd command. Setup requires autols -s with optional -d to set refresh rate in the monitoring terminal. Usage requires using '. autocd' command in place of the 'cd' command or simply cd with the appropriate alias.
+Autols eliminates the need to execute the ls command after every directory change. It displays the path and contents of the current working directory of either the terminal which most recently executed the cd command by default or of a terminal identified by its pid . Setup requires autols -s with optional -d and -p. Usage requires using '. autocd' command in place of the 'cd' command or simply cd with the appropriate alias.
 .SH OPTIONS
 .TP
-\-s
+\-s --start
 start autols in monitoring terminal
 .TP
-\-d
+\-d --delay
 set refresh rate in milliseconds ( to be used with -s ) 500 by deafult
 .TP
-\-e
-end autols monitoring from any terminal
+\-p --pid
+set pid of terminal
+.TP
+\-e --end
+end autols monitoring from any terminal. If the terminal issueing the end command has a pid linked version of autols running it will end any and  all of those, else, it will end any and  all non-pid specific versions. 
 .SH AUTHOR
 Jacob Condello (jake.condello (at) gmail.com)
